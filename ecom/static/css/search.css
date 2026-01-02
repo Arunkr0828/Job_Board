@@ -1,0 +1,237 @@
+/* --- SEARCH SECTION STYLES --- */
+.search-header-box {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.search-input-group {
+    display: flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 2px solid #edf2f7;
+    border-radius: 12px;
+    padding: 5px 15px;
+    margin: 20px 0;
+    transition: 0.3s;
+}
+
+.search-input-group:focus-within {
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+}
+
+.search-input-group i {
+    color: #a0aec0;
+    margin-right: 15px;
+}
+
+.search-input-group input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 12px 0;
+    font-size: 1rem;
+    outline: none;
+}
+
+.btn-search-main {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.quick-filters {
+    display: flex;
+    gap: 15px;
+}
+
+.quick-filters select {
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    color: #4a5568;
+    background: white;
+    outline: none;
+}
+
+/* Jobs Grid */
+.jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.search-result-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #f0f0f0;
+    transition: 0.3s;
+}
+
+.search-result-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+.job-tags {
+    margin: 15px 0;
+    display: flex;
+    gap: 10px;
+}
+
+.job-tags span {
+    background: #f1f7ff;
+    color: var(--primary);
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+    color: #718096;
+}
+/* JOB CARD FOOTER */
+.job-card-footer {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+/* OUTLINE BUTTON */
+.btn-outline {
+    background: transparent;
+    border: 2px solid #2563eb;
+    color: #2563eb;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-outline:hover {
+    background: #2563eb;
+    color: #fff;
+}
+
+/* PRIMARY BUTTON */
+.btn-primary {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-primary:hover {
+    background: #1e40af;
+}
+/* --- ENHANCED RESPONSIVE SEARCH --- */
+
+/* Ensure the main container doesn't overflow */
+.search-header-box {
+    background: white;
+    padding: clamp(15px, 5%, 30px); /* Fluid padding */
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+/* Flexbox for Search Input Group */
+.search-input-group {
+    display: flex;
+    flex-wrap: wrap; /* Allows button to wrap on very small screens */
+    align-items: center;
+    background: #f8fafc;
+    border: 2px solid #edf2f7;
+    border-radius: 12px;
+    padding: 5px 10px;
+    margin: 20px 0;
+    transition: 0.3s;
+    gap: 10px;
+}
+
+.search-input-group input {
+    flex: 1;
+    min-width: 200px; /* Prevents input from disappearing */
+    border: none;
+    background: transparent;
+    padding: 12px 5px;
+    font-size: 1rem;
+    outline: none;
+}
+
+/* Make search button adapt */
+.btn-search-main {
+    white-space: nowrap;
+    width: auto;
+}
+
+/* Filter adjustments */
+.quick-filters {
+    display: flex;
+    flex-wrap: wrap; /* Responsive wrapping for dropdowns */
+    gap: 12px;
+}
+
+.quick-filters select {
+    flex: 1; /* Dropdowns take equal space */
+    min-width: 140px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+}
+
+/* --- MOBILE QUERIES (Phone & Small Tablets) --- */
+@media (max-width: 600px) {
+    .search-input-group {
+        padding: 10px;
+        flex-direction: column; /* Stack input and button */
+        align-items: stretch;
+        background: transparent; /* Remove shared background */
+        border: none;
+    }
+
+    .search-input-group i {
+        display: none; /* Hide icon to save space on mobile */
+    }
+
+    .search-input-group input {
+        background: #f8fafc;
+        border: 2px solid #edf2f7;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 5px;
+    }
+
+    .btn-search-main {
+        width: 100%; /* Full width button on mobile */
+        padding: 15px;
+    }
+
+    .quick-filters {
+        flex-direction: column; /* Stack filters vertically */
+    }
+
+    .quick-filters select {
+        width: 100%;
+    }
+}

@@ -1,0 +1,169 @@
+/* --- GLOBAL RESET & EXECUTIVE FONTS --- */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Dark overlay to make the tech-background pop without being distracting */
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.8)), 
+                url('/static/media/image.png'); 
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- THE MAIN BOX (Premium Glassmorphism) --- */
+.box {
+    position: relative;
+    width: 420px;
+    height: auto;
+    background: rgba(255, 255, 255, 0.03); /* Extremely subtle glass */
+    border-radius: 24px;
+    padding: 2px; /* For the animated border width */
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+}
+
+/* Sophisticated "Tech-Glow" Border Animation */
+.box::before, .box::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(60deg, transparent, #007bff, #38bdf8);
+    transform-origin: bottom right;
+    animation: animate 8s linear infinite;
+}
+
+.box::after {
+    animation-delay: -4s;
+}
+
+@keyframes animate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* --- THE FORM CONTAINER (Modern Dark Theme) --- */
+form {
+    position: relative;
+    /* Deep Navy matching IT dashboard headers */
+    background: #0f172a; 
+    border-radius: 22px;
+    z-index: 10;
+    padding: 45px 35px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.title h1 {
+    color: #f8fafc; /* Crisp white */
+    font-size: 1.85rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: -0.5px;
+}
+
+/* --- REFINED INPUT FIELDS --- */
+.input-box {
+    width: 100%;
+}
+
+.label-color {
+    color: #94a3b8; /* Soft blue-grey */
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+form .input-box input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05); /* Semi-transparent */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #fff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+form .input-box input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #007bff;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.15);
+}
+
+/* --- BUTTONS (Corporate Blue) --- */
+.Login, .Login1, .Login2 {
+    background: linear-gradient(90deg, #007bff, #0ea5e9);
+    cursor: pointer;
+    color: white;
+    padding: 14px;
+    border: none;
+    margin-top: 15px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    width: 100%;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.Login:hover, .Login1:hover, .Login2:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 123, 255, 0.3);
+}
+
+/* --- CAPTCHA & LINKS --- */
+#captchaData {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #38bdf8 !important; /* Tech Blue */
+    font-family: 'Courier New', monospace;
+}
+
+#refreshCaptcha {
+    background: #1e293b !important;
+    color: #38bdf8 !important;
+}
+
+.link-text, .switch {
+    color: #64748b;
+    font-size: 0.85rem;
+    margin-top: 20px;
+}
+
+.link-text a, .switch a {
+    color: #38bdf8;
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.link-text a:hover {
+    text-decoration: underline;
+}
+
+/* --- RESPONSIVE FIXES --- */
+@media (max-width: 480px) {
+    .box { width: 90%; }
+    form { padding: 35px 25px; }
+}

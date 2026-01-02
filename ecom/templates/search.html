@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job House Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/Dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/application.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="toggle-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 class="logo-text">ItHUB</h2>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="{% url 'dashboard' %}" class="#" onclick="showSection('overview')">
+                        <i class="fas fa-home"></i>
+                        <span class="link-text">Home</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'search_jobs' %}" onclick="showSection('search')">
+                        <i class="fas fa-search"></i>
+                        <span class="link-text">Find Jobs</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'advice' %}" onclick="showSection('tutorials')">
+                        <i class="fab fa-youtube"></i>
+                        <span class="link-text">Career Advice</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'applications' %}" onclick="showSection('applications')">
+                        <i class="fas fa-file-alt"></i>
+                        <span class="link-text">Applied Jobs</span>
+                    </a>
+                </li>
+
+                <!-- About -->
+                <li>
+                    <a href="{% url 'about' %}" onclick="showSection('about')">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="link-text">About</span>
+                    </a>
+                </li>
+
+                <!-- Contact -->
+                <li>
+                    <a href="{% url 'contact' %}" onclick="showSection('contact')">
+                        <i class="fas fa-envelope"></i>
+                        <span class="link-text">Contact</span>
+                    </a>
+                </li><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+                <!-- Logout -->
+                <li class="logout-item">
+                    <a href="{% url 'logout' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="link-text">Logout</span>
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+
+        <main class="main-content" id="mainContent">
+            <div class="mobile-header">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <h2 class="mobile-logo">ItHUB</h2>
+                <div class="mobile-profile" onclick="toggleProfileMenu(event, 'mobileProfileDropdown')">
+
+                    <div class="profile-img-container">
+                        <span class="user-name">{{ name }}</span>
+                        {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" id="profileDisplay">
+                        {% else %}
+                        <img src="{% static 'media/profile.jpg' %}" id="profileDisplay">
+                        {% endif %}
+                    </div>
+
+                    <div class="profile-dropdown mobile-dropdown" id="mobileProfileDropdown">
+
+                        <a href="{% url 'profile'%}"><i class="fas fa-user"></i> Profile</a>
+                        <hr>
+                        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <header class="top-bar">
+                <div class="top-left">
+                    <a href="#" class="logo-link">
+                        <img src="{% static 'media/logo.jpg' %}" alt="ItHUB" class="top-logo">
+                        <span class="logo-text-inline">ItHUB</span>
+                    </a>
+                </div>
+                <!-- <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search jobs, skills..." />
+                </div> -->
+
+                <div class="user-profile" onclick="toggleProfileMenu(event, 'desktopProfileDropdown')">
+
+                    <span class="user-name">{{ name }}</span>
+
+
+                    <div class="profile-img-container">
+                        {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" id="profileDisplay">
+                        {% else %}
+                        <img src="{% static 'media/profile.jpg' %}" id="profileDisplay">
+                        {% endif %}
+                    </div>
+
+
+                    <i class="fas fa-chevron-down"></i>
+
+                    <div class="profile-dropdown" id="desktopProfileDropdown">
+
+                        <a href="{% url 'profile'%}">Profile</a>
+                        <hr>
+                        <a href="{% url 'logout' %}">Logout</a>
+                    </div>
+                </div>
+
+            </header>
+            <div class="content-body">
+                <section id="search" class="content-section">
+                    <div class="search-header-box">
+                        <h3 class="section-title"><i class="fas fa-search-location"></i> Explore Opportunities</h3>
+
+                        <form method="GET" action="{% url 'search_jobs' %}" class="search-form">
+                            <div class="search-input-group">
+                                <i class="fas fa-search"></i>
+                                <input type="text" name="q" placeholder="Search by Job Title (e.g. Python Developer)"
+                                    id="jobSearchInput">
+                                <button type="submit" class="btn-search-main">Search Jobs</button>
+                            </div>
+
+                            <div class="quick-filters">
+                                <select name="location">
+                                    <option value="">All Locations</option>
+                                    <option value="remote">Remote</option>
+                                    <option value="mumbai">Mumbai</option>
+                                </select>
+                                <select name="type">
+                                    <option value="">Job Type</option>
+                                    <option value="full-time">Full Time</option>
+                                    <option value="internship">Internship</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="searchResults" class="jobs-grid">
+                        {% if jobs %}
+                        {% for job in jobs %}
+                        <div class="job-card search-result-card">
+                            <div class="job-card-top">
+                                <div class="company-logo-small"><i class="fas fa-code"></i></div>
+                                <div class="job-meta">
+                                    <h4>{{ job.title }}</h4>
+                                    <p>{{ job.company }} • {{ job.location }}</p>
+                                </div>
+                            </div>
+                            <div class="job-tags">
+                                <span>{{ job.location }}</span>
+                                <span>{{ job.salary }}</span>
+                            </div>
+
+                            <div class="job-card-footer">
+                                <a href="{% url 'dashboard' %}?find_job={{ job.id }}" class="btn-primary">
+                                    View on Dashboard
+                                </a>
+                            </div>
+
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="no-results">
+                            <img src="{% static 'media/no-results.png' %}" alt="No jobs found">
+                            <h4>No jobs found for this title</h4>
+                            <p>Try searching for "Developer" or "Intern"</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </section>
+            </div>
+
+        </main>
+    </div>
+    <script src="{% static 'js/profile.js' %}"></script>
+    <script src="{% static 'js/application.js' %}"></script>
+    <script src="{% static 'js/Dashboard.js' %}"></script>
+</body>
+
+</html>

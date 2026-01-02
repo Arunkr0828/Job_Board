@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job House Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/Dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/application.css' %}">
+    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="toggle-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 class="logo-text">ItHUB</h2>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="{% url 'dashboard' %}" class="#" onclick="showSection('overview')">
+                        <i class="fas fa-home"></i>
+                        <span class="link-text">Home</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'search_jobs' %}" onclick="showSection('search')">
+                        <i class="fas fa-search"></i>
+                        <span class="link-text">Find Jobs</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'advice' %}" onclick="showSection('tutorials')">
+                        <i class="fab fa-youtube"></i>
+                        <span class="link-text">Career Advice</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'applications' %}" onclick="showSection('applications')">
+                        <i class="fas fa-file-alt"></i>
+                        <span class="link-text">Applied Jobs</span>
+                    </a>
+                </li>
+
+                <!-- About -->
+                <li>
+                    <a href="{% url 'about' %}" onclick="showSection('about')">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="link-text">About</span>
+                    </a>
+                </li>
+
+                <!-- Contact -->
+                <li>
+                    <a href="{% url 'contact' %}" onclick="showSection('contact')">
+                        <i class="fas fa-envelope"></i>
+                        <span class="link-text">Contact</span>
+                    </a>
+                </li><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+                <!-- Logout -->
+                <li class="logout-item">
+                    <a href="{% url 'logout' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="link-text">Logout</span>
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+
+        <main class="main-content" id="mainContent">
+            <div class="mobile-header">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <h2 class="mobile-logo">ItHUB</h2>
+                <div class="mobile-profile" onclick="toggleProfileMenu(event, 'mobileProfileDropdown')">
+
+                    <div class="profile-img-container">
+                        <span class="user-name">{{ name }}</span>
+                        {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" id="profileDisplay">
+                        {% else %}
+                        <img src="{% static 'media/profile.jpg' %}" id="profileDisplay">
+                        {% endif %}
+                    </div>
+
+                    <div class="profile-dropdown mobile-dropdown" id="mobileProfileDropdown">
+
+                        <a href="{% url 'profile'%}"><i class="fas fa-user"></i> Profile</a>
+                        <hr>
+                        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <header class="top-bar">
+                <div class="top-left">
+                    <a href="#" class="logo-link">
+                        <img src="{% static 'media/logo.jpg' %}" alt="ItHUB" class="top-logo">
+                        <span class="logo-text-inline">ItHUB</span>
+                    </a>
+                </div>
+                <!-- <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search jobs, skills..." />
+                </div> -->
+
+                <div class="user-profile" onclick="toggleProfileMenu(event, 'desktopProfileDropdown')">
+
+                    <span class="user-name">{{ name }}</span>
+
+
+                    <div class="profile-img-container">
+                        {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" id="profileDisplay">
+                        {% else %}
+                        <img src="{% static 'media/profile.jpg' %}" id="profileDisplay">
+                        {% endif %}
+                    </div>
+
+
+                    <i class="fas fa-chevron-down"></i>
+
+                    <div class="profile-dropdown" id="desktopProfileDropdown">
+
+                        <a href="{% url 'profile'%}">Profile</a>
+                        <hr>
+                        <a href="{% url 'logout' %}">Logout</a>
+                    </div>
+                </div>
+
+            </header>
+            <section id="contact" class="content-section">
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h2 class="section-title">Get in Touch</h2>
+                        <p>Have questions about a job or need help with your career? Our team is here to support you
+                            24/7.</p>
+
+                        <div class="info-details">
+                            <div class="info-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h4>Email Us</h4>
+                                    <p>ithubjob07@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <h4>Location</h4>
+                                    <p>Mirudih, Adiyapur, Jamshedpur, Jharkhand</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/..." target="_blank" aria-label="LinkedIn"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                            <a href="https://github.com/..." target="_blank" aria-label="GitHub"><i
+                                    class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-card">
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert {{ message.tags }}">
+                            <i class="fas fa-info-circle"></i> {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                        <form id="contactForm" method="POST" action="{% url 'contact' %}">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <label>Full Name</label>
+                                <input type="text" name="name" placeholder="John Doe" required>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Email Address</label>
+                                <input type="email" name="email" placeholder="name@company.com" required>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Subject</label>
+                                <select name="subject">
+                                    <option>Job Inquiry</option>
+                                    <option>Technical Support</option>
+                                    <option>Career Advice</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Message</label>
+                                <textarea rows="4" name="message" placeholder="Tell us how we can help..."
+                                    required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-send">
+                                Send Message <i class="fas fa-paper-plane"></i>
+                            </button>
+
+                            <div id="contactLoader" class="loader"
+                                style="display:none; text-align: center; margin-top: 15px;">
+                                <i class="fas fa-spinner fa-spin"></i> Sending...
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+    </div>
+    </div>
+
+    </main>
+    </div>
+    <script src="{% static 'js/contact.js' %}"></script>
+
+    <script src="{% static 'js/profile.js' %}"></script>
+    <script src="{% static 'js/application.js' %}"></script>
+    <script src="{% static 'js/Dashboard.js' %}"></script>
+</body>
+
+</html>

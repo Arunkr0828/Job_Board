@@ -1,0 +1,301 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job House Dashboard</title>
+
+    <link rel="stylesheet" href="{% static 'css/Dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+
+<body>
+
+    <div class="app-container">
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="toggle-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 class="logo-text">ItHUB</h2>
+            </div>
+
+            <ul class="nav-links">
+                <li>
+                    <a href="{% url 'dashboard' %}" class="#" onclick="showSection('overview')">
+                        <i class="fas fa-home"></i>
+                        <span class="link-text">Home</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'search_jobs' %}" onclick="showSection('search')">
+                        <i class="fas fa-search"></i>
+                        <span class="link-text">Find Jobs</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'advice' %}" onclick="showSection('tutorials')">
+                        <i class="fab fa-youtube"></i>
+                        <span class="link-text">Career Advice</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'applications' %}" onclick="showSection('applications')">
+                        <i class="fas fa-file-alt"></i>
+                        <span class="link-text">Applied Jobs</span>
+                    </a>
+                </li>
+
+                <!-- About -->
+                <li>
+                    <a href="{% url 'about' %}" onclick="showSection('about')">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="link-text">About</span>
+                    </a>
+                </li>
+
+                <!-- Contact -->
+                <li>
+                    <a href="{% url 'contact' %}" onclick="showSection('contact')">
+                        <i class="fas fa-envelope"></i>
+                        <span class="link-text">Contact</span>
+                    </a>
+                </li><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+                <!-- Logout -->
+                <li class="logout-item">
+                    <a href="{% url 'logout' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="link-text">Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main-content" id="mainContent">
+            <div class="mobile-header">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <h2 class="mobile-logo">ItHUB</h2>
+                <div class="mobile-profile" onclick="toggleProfileMenu(event, 'mobileProfileDropdown')">
+
+                    {% if profile.profile_image %}
+                    <img src="{{ profile.profile_image.url }}" class="profileDisplay">
+                    {% else %}
+                    <img src="{% static 'media/img.jpg' %}" class="profileDisplay">
+                    {% endif %}
+
+                    <div class="profile-dropdown mobile-dropdown" id="mobileProfileDropdown">
+                        <a href="{% url 'profile' %}"><i class="fas fa-user"></i> Profile</a>
+                        <hr>
+                        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <header class="top-bar">
+                <div class="top-left">
+                    <a href="#" class="logo-link">
+                        <img src="{% static 'media/logo.jpg' %}" alt="ItHUB" class="top-logo">
+                        <span class="logo-text-inline">ItHUB</span>
+                    </a>
+                </div>
+                <!-- <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search jobs, skills..." />
+                </div> -->
+
+                <div class="user-profile" onclick="toggleProfileMenu(event, 'desktopProfileDropdown')">
+
+                    <span class="user-name">{{ user.name }}</span>
+
+                    <div class="profile-img-container">
+                        {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" class="profileDisplay">
+                        {% else %}
+                        <img src="{% static 'media/profile.jpg' %}" class="profileDisplay">
+                        {% endif %}
+                    </div>
+
+                    <i class="fas fa-chevron-down"></i>
+
+                    <div class="profile-dropdown" id="desktopProfileDropdown">
+                        <a href="{% url 'profile' %}"><i class="fas fa-user"></i> Profile</a>
+                        <hr>
+                        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+
+
+            </header>
+            <div class="content-body">
+                <div class="content-body">
+
+
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="profile-container">
+
+                            <!-- LEFT SIDEBAR -->
+                            <aside class="profile-card-sidebar">
+
+                                <div class="profile-pic-section">
+                                    <div class="profile-img-wrapper">
+
+                                        {% if profile.profile_image %}
+                                        <img src="{{ profile.profile_image.url }}" id="profileDisplay">
+                                        {% else %}
+                                        <img src="{% static 'media/profile.jpg' %}" id="profileDisplay">
+                                        {% endif %}
+
+                                        <label for="profile_image" class="upload-icon">
+                                            <i class="fas fa-camera"></i>
+                                        </label>
+
+                                        <input type="file" name="profile_image" id="profile_image" hidden>
+                                    </div>
+
+                                    <h2>{{ user.name }}</h2>
+
+                                    <input type="text" name="headline" class="headline-input"
+                                        placeholder="Your headline" value="{{ profile.headline }}">
+
+                                </div>
+
+                                <!-- CONTACT INFO -->
+                                <div class="contact-info">
+
+                                    <div class="info-item">
+                                        <i class="fas fa-envelope"></i>
+                                        <div>
+                                            <span>Email</span>
+                                            <p>{{ user.email }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="info-item">
+                                        <i class="fas fa-phone"></i>
+                                        <div>
+                                            <span>Phone</span>
+                                            <input type="text" name="phone" value="{{ profile.phone }}"
+                                                placeholder="+91 XXXXX XXXXX">
+                                        </div>
+                                    </div>
+
+                                    <div class="info-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <div>
+                                            <span>Location</span>
+                                            <input type="text" name="location" value="{{ profile.location }}"
+                                                placeholder="City, Country">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- SOCIAL -->
+                                <div class="social-links">
+                                    <input type="url" name="linkedin" placeholder="LinkedIn URL"
+                                        value="{{ profile.linkedin }}">
+                                    <input type="url" name="github" placeholder="GitHub URL"
+                                        value="{{ profile.github }}">
+                                    <input type="url" name="website" placeholder="Website"
+                                        value="{{ profile.website }}">
+                                </div>
+
+                            </aside>
+
+                            <!-- RIGHT CONTENT -->
+                            <section class="profile-details-main">
+
+
+                                <!-- RESUME -->
+                                <div class="details-section cv-manager">
+                                    <h3><i class="fas fa-file-alt"></i> CV / Resume</h3>
+                                    <label class="file-upload-box">
+                                        Upload Resume
+                                        <input type="file" name="resume">
+                                    </label>
+
+
+                                    {% if profile.resume %}
+                                    <p>
+                                        <a href="{{ profile.resume.url }}" target="_blank"> <br>
+                                            {{ profile.resume.name }}
+                                        </a>
+                                    </p>
+                                    {% endif %}
+
+                                    <input type="file" name="resume">
+                                </div>
+
+                                <!-- SKILLS -->
+                                <div class="details-section">
+                                    <h3><i class="fas fa-tools"></i> Professional Skills</h3>
+
+                                    <input type="text" name="skills" value="{{ profile.skills }}"
+                                        placeholder="Python, Django, React, SQL">
+                                </div>
+
+                                <!-- EXPERIENCE -->
+                                <div class="details-section">
+                                    <h3><i class="fas fa-briefcase"></i> Work Experience</h3>
+
+                                    <input type="text" name="experience_title" value="{{ profile.experience_title }}"
+                                        placeholder="Job Title">
+
+                                    <textarea name="experience_desc"
+                                        placeholder="Describe your work">{{ profile.experience_desc }}</textarea>
+                                </div>
+
+                                <!-- EDUCATION -->
+                                <div class="details-section">
+                                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+
+                                    <input type="text" name="education_title" value="{{ profile.education_title }}"
+                                        placeholder="Degree / Course">
+
+                                    <textarea name="education_desc"
+                                        placeholder="Education details">{{ profile.education_desc }}</textarea>
+                                </div>
+
+                                <!-- SAVE -->
+                                <button type="submit" class="save-profile-btn">
+                                    Save Profile Changes
+                                </button>
+
+                            </section>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <script src="{% static 'js/profile.js' %}"></script>
+    <script src="{% static 'js/Dashboard.js' %}"></script>
+</body>
+
+</html>

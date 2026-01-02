@@ -1,0 +1,86 @@
+.advice-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.advice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 10px;
+}
+
+.advice-card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid #eef2f6;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.advice-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.08);
+    border-color: var(--primary);
+}
+
+.advice-icon {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.advice-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+    color: #2d3748;
+}
+
+.advice-card p {
+    color: #718096;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.card-tag {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #e1effe;
+    color: #1e429f;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.card-tag.trending {
+    background: #fdf2f2;
+    color: #9b1c1c;
+}
+
+.btn-advice {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #f8fafc;
+    color: var(--primary);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    transition: 0.2s;
+    border: 1px solid #e2e8f0;
+}
+
+.btn-advice:hover {
+    background: var(--primary);
+    color: white;
+}

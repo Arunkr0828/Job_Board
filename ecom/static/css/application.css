@@ -1,0 +1,250 @@
+/* --- JOB DESCRIPTION TOGGLE STYLES --- */
+.app-card-meta {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    color: #4a5568;
+}
+
+.meta-item i {
+    color: var(--primary);
+    margin-right: 5px;
+}
+
+/* Description Container (Hidden by default) */
+.job-desc-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.3s ease;
+    background: #f8fafc;
+    border-radius: 8px;
+    margin-bottom: 0;
+}
+
+.job-desc-container.active {
+    max-height: 1000px; /* Large enough for any text */
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #edf2f7;
+}
+
+.job-desc-text {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: #4a5568;
+}
+
+/* Toggle Button */
+.btn-details-toggle {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: 0.3s;
+}
+
+.btn-details-toggle i {
+    transition: transform 0.3s ease;
+}
+
+.btn-details-toggle.active i {
+    transform: rotate(180deg);
+}
+
+.btn-details-toggle:hover {
+    text-decoration: underline;
+}
+
+/* Resume link polish */
+.btn-view-cv {
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: #e53e3e; /* Professional Red for PDF */
+    font-weight: 600;
+}
+/* --- APPLICATIONS SECTION STYLES --- */
+#applications {
+    display: block !important; /* Ensure visibility for testing */
+    padding: 20px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.app-count {
+    background: #e1f0ff;
+    color: var(--primary);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Grid Layout */
+.applications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+/* The Card */
+.app-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid #edf2f7;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.app-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary);
+}
+
+/* Header: Logo, Title, Status */
+.app-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.company-icon {
+    width: 48px;
+    height: 48px;
+    background: #f7fafc;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a0aec0;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.job-info h4 {
+    color: #2d3748;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+
+.job-info p {
+    color: #718096;
+    font-size: 0.9rem;
+}
+
+.dot { margin: 0 5px; color: #cbd5e0; }
+
+/* Status Pills */
+.status-pill {
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Status Colors */
+.status-pill.pending, .status-pill.applied { background: #fffaf0; color: #b7791f; }
+.status-pill.shortlisted, .status-pill.accepted { background: #f0fff4; color: #2f855a; }
+.status-pill.rejected { background: #fff5f5; color: #c53030; }
+
+/* Body: Meta Items */
+.app-card-body {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 15px 0;
+    border-top: 1px solid #f7fafc;
+    border-bottom: 1px solid #f7fafc;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #4a5568;
+}
+
+.meta-item i { color: #a0aec0; }
+
+/* Footer: Buttons */
+.app-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-view-cv {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-view-cv:hover { text-decoration: underline; }
+
+.btn-details {
+    color: #718096;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.btn-details:hover { color: var(--primary); }
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 16px;
+    border: 2px dashed #e2e8f0;
+}
+
+.empty-state i { font-size: 3rem; color: #cbd5e0; margin-bottom: 20px; }
+.empty-state p { color: #718096; margin-bottom: 20px; }
+
+/* --- RESPONSIVE FIXES --- */
+@media (max-width: 768px) {
+    .applications-grid {
+        grid-template-columns: 1fr; /* Stack on mobile */
+    }
+
+    .app-card-header {
+        flex-wrap: wrap;
+    }
+
+    .status-pill {
+        margin-left: 0;
+        margin-top: 10px;
+        order: 3;
+        width: fit-content;
+    }
+    
+    .app-card-body {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

@@ -1,0 +1,247 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Job House Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/Dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/application.css' %}">
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="toggle-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 class="logo-text">ItHUB</h2>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="{% url 'dashboard' %}" class="#" onclick="showSection('overview')">
+                        <i class="fas fa-home"></i>
+                        <span class="link-text">Home</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'search_jobs' %}" onclick="showSection('search')">
+                        <i class="fas fa-search"></i>
+                        <span class="link-text">Find Jobs</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'advice' %}" onclick="showSection('tutorials')">
+                        <i class="fab fa-youtube"></i>
+                        <span class="link-text">Career Advice</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'applications' %}" onclick="showSection('applications')">
+                        <i class="fas fa-file-alt"></i>
+                        <span class="link-text">Applied Jobs</span>
+                    </a>
+                </li>
+
+                <!-- About -->
+                <li>
+                    <a href="{% url 'about' %}" onclick="showSection('about')">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="link-text">About</span>
+                    </a>
+                </li>
+
+                <!-- Contact -->
+                <li>
+                    <a href="{% url 'contact' %}" onclick="showSection('contact')">
+                        <i class="fas fa-envelope"></i>
+                        <span class="link-text">Contact</span>
+                    </a>
+                </li><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+                <!-- Logout -->
+                <li class="logout-item">
+                    <a href="{% url 'logout' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="link-text">Logout</span>
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+
+        <main class="main-content" id="mainContent">
+            <div class="mobile-header">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <h2 class="mobile-logo">ItHUB</h2>
+                <div class="mobile-profile" onclick="toggleProfileMenu(event, 'mobileProfileDropdown')">
+
+                    <div class="profile-img-container">
+
+
+
+                        <span class="user-name">{{ name }}</span>
+
+
+                        {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" id="profileDisplay">
+                        {% else %}
+                        <img src="{% static 'media/profile.jpg' %}" id="profileDisplay">
+                        {% endif %}
+                    </div>
+
+                    <div class="profile-dropdown mobile-dropdown" id="mobileProfileDropdown">
+
+                        <a href="{% url 'profile'%}"><i class="fas fa-user"></i> Profile</a>
+                        <hr>
+                        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <header class="top-bar">
+                <div class="top-left">
+                    <a href="#" class="logo-link">
+                        <img src="{% static 'media/logo.jpg' %}" alt="ItHUB" class="top-logo">
+                        <span class="logo-text-inline">ItHUB</span>
+                    </a>
+                </div>
+                <!-- <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search jobs, skills..." />
+                </div> -->
+
+                <div class="user-profile" onclick="toggleProfileMenu(event, 'desktopProfileDropdown')">
+
+                    <span class="user-name">{{ name }}</span>
+
+
+                    <div class="profile-img-container">
+                        {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" id="profileDisplay">
+                        {% else %}
+                        <img src="{% static 'media/profile.jpg' %}" id="profileDisplay">
+                        {% endif %}
+                    </div>
+
+
+                    <i class="fas fa-chevron-down"></i>
+
+                    <div class="profile-dropdown" id="desktopProfileDropdown">
+
+                        <a href="{% url 'profile'%}">Profile</a>
+                        <hr>
+                        <a href="{% url 'logout' %}">Logout</a>
+                    </div>
+                </div>
+
+            </header>
+
+
+
+            <section id="about" class="content-section">
+                <div class="about-hero">
+                    <h2 class="section-title">
+                        Elevate Your Career with <span class="text-primary">ItHUB</span>
+                    </h2>
+                    <p class="hero-subtitle">
+                        The professional job marketplace for elite IT talent.
+                    </p>
+
+                </div>
+
+                <div class="about-grid">
+                    <div class="about-text-card">
+                        <div class="accent-line"></div>
+                        <h3>Our Mission</h3>
+                        <p>In a rapidly evolving digital landscape, finding the right role shouldn't be a challenge. We
+                            provide a streamlined, high-performance platform where talent meets ambition without the
+                            noise of general job boards.</p>
+                    </div>
+
+                    <div class="about-features">
+                        <div class="feature-mini-card">
+                            <i class="fas fa-microchip"></i>
+                            <div>
+                                <h4>Tech-Focused</h4>
+                                <p>Curation of exclusively IT sector listings.</p>
+                            </div>
+                        </div>
+                        <div class="feature-mini-card">
+                            <i class="fas fa-handshake"></i>
+                            <div>
+                                <h4>Direct Pipeline</h4>
+                                <p>Bypassing standard hurdles to reach top firms.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-section">
+                    <h3>Visionary Minds Behind ItHUB</h3>
+                    <p class="team-desc">Developed with passion to empower the global tech community.</p>
+
+                    <div class="team-container">
+                        <div class="team-member">
+                            <div class="member-image">
+                                <img src="{% static 'media/arun.jpg' %}" alt="Arun Chandra Kumar">
+                            </div>
+                            <div class="member-info">
+                                <h4>Arun Chandra Kumar</h4>
+                                <a href="https://www.linkedin.com/in/arun-chandra-kumar-7503a828a" class="linkedin-link"
+                                    target="_blank">
+                                    <i class="fab fa-linkedin"></i> LinkedIn Profile
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="member-image">
+                                <img src="{% static 'media/rahul.jpg' %}" alt="Rahul Kumar Goswami">
+                            </div>
+                            <div class="member-info">
+                                <h4>Rahul Kumar Goswami</h4>
+                                <a href="https://www.linkedin.com/in/rahul-goswami-a6a243311" class="linkedin-link"
+                                    target="_blank">
+                                    <i class="fab fa-linkedin"></i> LinkedIn Profile
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-cta">
+                    <h3>Ready to build the future?</h3>
+                    <p>Join thousands of developers finding their dream roles daily.</p>
+                    <a href="{% url 'search_jobs' %}" class="btn-ghost-large">
+                        Browse Opportunities <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </section>
+
+
+    </div>
+    </div>
+
+    </main>
+    </div>
+    <script src="{% static 'js/profile.js' %}"></script>
+    <script src="{% static 'js/application.js' %}"></script>
+    <script src="{% static 'js/Dashboard.js' %}"></script>
+</body>
+
+</html>

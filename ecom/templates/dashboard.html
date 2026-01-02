@@ -1,0 +1,322 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job House Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/Dashboard.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="toggle-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 class="logo-text">ItHUB</h2>
+            </div>
+
+            <ul class="nav-links">
+                <li>
+                    <a href="{% url 'dashboard' %}" class="#" onclick="showSection('overview')">
+                        <i class="fas fa-home"></i>
+                        <span class="link-text">Home</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'search_jobs' %}" onclick="showSection('search')">
+                        <i class="fas fa-search"></i>
+                        <span class="link-text">Find Jobs</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'advice' %}" onclick="showSection('tutorials')">
+                        <i class="fab fa-youtube"></i>
+                        <span class="link-text">Career Advice</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'applications' %}" onclick="showSection('applications')">
+                        <i class="fas fa-file-alt"></i>
+                        <span class="link-text">Applied Jobs</span>
+                    </a>
+                </li>
+
+                <!-- About -->
+                <li>
+                    <a href="{% url 'about' %}" onclick="showSection('about')">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="link-text">About</span>
+                    </a>
+                </li>
+
+                <!-- Contact -->
+                <li>
+                    <a href="{% url 'contact' %}" onclick="showSection('contact')">
+                        <i class="fas fa-envelope"></i>
+                        <span class="link-text">Contact</span>
+                    </a>
+                </li><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+                <!-- Logout -->
+                <li class="logout-item">
+                    <a href="{% url 'logout' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="link-text">Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main-content" id="mainContent">
+            <div class="mobile-header">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <h2 class="mobile-logo">ItHUB</h2>
+                <div class="mobile-profile" onclick="toggleProfileMenu(event, 'mobileProfileDropdown')">
+
+                    <div class="profile-img-container">
+                        <span class="user-name">{{ name }}</span>
+                        {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" id="profileDisplay">
+                        {% else %}
+                        <img src="{% static 'media/profile.jpg' %}" id="profileDisplay">
+                        {% endif %}
+                    </div>
+
+                    <div class="profile-dropdown mobile-dropdown" id="mobileProfileDropdown">
+
+                        <a href="{% url 'profile'%}"><i class="fas fa-user"></i> Profile</a>
+                        <hr>
+                        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <header class="top-bar">
+                <div class="top-left">
+                    <a href="#" class="logo-link">
+                        <img src="{% static 'media/logo.jpg' %}" alt="ItHUB" class="top-logo">
+                        <span class="logo-text-inline">ItHUB</span>
+                    </a>
+                </div>
+                <!-- <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search jobs, skills..." />
+                </div> -->
+
+                <div class="user-profile" onclick="toggleProfileMenu(event, 'desktopProfileDropdown')">
+
+                    <span class="user-name">{{ name }}</span>
+
+
+                    <div class="profile-img-container">
+                        {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" id="profileDisplay">
+                        {% else %}
+                        <img src="{% static 'media/profile.jpg' %}" id="profileDisplay">
+                        {% endif %}
+                    </div>
+
+
+                    <i class="fas fa-chevron-down"></i>
+
+                    <div class="profile-dropdown" id="desktopProfileDropdown">
+
+                        <a href="{% url 'profile'%}">Profile</a>
+                        <hr>
+                        <a href="{% url 'logout' %}">Logout</a>
+                    </div>
+                </div>
+
+            </header>
+
+
+            <div class="content-body">
+                <section id="overview" class="content-section">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>{{ applications|length }}</h3>
+                            <p>Applied</p>
+                        </div>
+                        <div class="stat-card blue">
+                            <h3>{{ shortlisted_count }}</h3>
+                            <p>Shortlisted</p>
+                        </div>
+
+                        <!-- <div class="stat-card green">
+                            <h3>{{ applied_count }}</h3>
+                            <p>Applied</p>
+                        </div> -->
+
+                        <div class="stat-card red">
+                            <h3>{{ rejected_count }}</h3>
+                            <p>Rejected</p>
+                        </div>
+                        <div class="stat-card green">
+                            <h3>{{ jobs|length }}+</h3>
+                            <p>New Jobs</p>
+                        </div>
+                    </div>
+
+                    <h3 class="section-title">Featured Jobs</h3>
+
+                    <div class="job-list">
+                        {% for job in jobs %}
+                        <div class="job-card">
+
+                            <!-- HEADER -->
+                            <div class="job-header" onclick="toggleJob('{{ job.id }}')">
+                                <div class="job-card" id="job-card-{{ job.id }}">
+                                    <h4 class="job-title">{{ job.title }}</h4>
+                                    <p class="job-company">{{ job.company }} • {{ job.location }}</p>
+                                </div>
+
+                                <span class="toggle-icon">
+                                    <i class="fas fa-chevron-down"></i>
+                                </span>
+                            </div>
+
+                            <!-- DETAILS -->
+                            <div class="job-details" id="job-{{ job.id }}">
+
+                                <div class="job-meta">
+                                    <span><strong>Salary:</strong> {{ job.salary }}</span>
+                                    <span><strong>Location:</strong> {{ job.location }}</span>
+                                    <span><strong>Company:</strong> {{ job.company }}</span>
+                                </div>
+
+                                <div class="job-section">
+                                    <h4>🧑‍💻 Job Description</h4>
+                                    <p class="job-desc">{{ job.job_description }}</p>
+                                </div>
+
+                                <div class="job-section">
+                                    <h4>🛠️ Required Skills</h4>
+                                    <p class="job-skills">{{ job.required_skills|linebreaks }}</p>
+                                </div>
+
+                                <div class="job-section">
+                                    <h4>🎯 Responsibilities</h4>
+                                    <p class="job-responsibilities">{{ job.responsibilities|linebreaks }}</p>
+                                </div>
+
+                                <div class="job-section">
+                                    <h4>🎓 Eligibility</h4>
+                                    <p class="job-eligibility">{{ job.eligibility|linebreaks }}</p>
+                                </div>
+
+                                <div class="job-section">
+                                    <h4>🌟 Benefits</h4>
+                                    <p class="job-benefits">{{ job.benefits|linebreaks }}</p>
+                                </div>
+
+                                <!-- <button type="button" class="apply-btn"
+                                    onclick="openApplyPopup('{{ job.id }}','{{ job.title|escapejs }}')">
+                                    Apply
+                                </button> -->
+                                {% if job.id in applied_jobs %}
+                                <button class="btn-applied" disabled>✔ Applied</button>
+                                {% else %}
+                                <button class="apply-btn"
+                                    onclick="openApplyPopup('{{ job.id }}','{{ job.title|escapejs }}')">
+                                    Apply
+                                </button>
+                                {% endif %}
+
+
+                            </div>
+
+
+                        </div>
+                        {% empty %}
+                        <p>No jobs available</p>
+                        {% endfor %}
+                    </div>
+
+                </section>
+
+
+            </div>
+            <!-- Apply Modal -->
+            <!-- Apply Modal -->
+            <!-- Apply Modal -->
+            <div id="applyModal" class="apply-modal" style="display:none;">
+                <div class="modal-backdrop" onclick="closeApplyPopup()"></div>
+
+                <div class="modal-box">
+                    <h3 id="modalJobTitle"><i class="fas fa-paper-plane"
+                            style="margin-right: 10px; color: #007bff;"></i>Apply for Position</h3>
+
+                    <p>
+                        <i class="fas fa-user-circle" style="width: 20px;"></i> Applicant:
+                        <strong id="modalUserName">{{ name }}</strong>
+                    </p>
+
+                    <div class="resume-section">
+                        <p style="margin-bottom: 10px;">
+                            <i class="fas fa-file-pdf" style="width: 20px; color: #e11d48;"></i>
+                            Current Resume:
+                            <a id="modalResumeLink" href="#" target="_blank">View Document</a>
+                        </p>
+
+                        <label class="resume-upload">
+                            <i class="fas fa-cloud-upload-alt" style="margin-right: 5px;"></i> Replace with new resume
+                            <input type="file" id="newResumeInput" accept=".pdf,.doc,.docx" />
+                        </label>
+                    </div>
+
+                    <p id="profileIncompleteMsg" class="warning" style="display:none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Please complete your profile first.
+                        <a id="completeProfileLink" href="{% url 'profile' %}"
+                            style="color: #c53030; font-weight: bold;">Go to profile</a>
+                    </p>
+
+                    <div class="modal-actions">
+                        <button id="confirmApplyBtn" class="apply-btn" onclick="confirmApply()">
+                            Confirm Application
+                        </button>
+
+                        <button onclick="closeApplyPopup()" class="cancel-btn">Discard</button>
+                    </div>
+
+                    <div id="applyLoader"
+                        style="display:none; margin-top: 15px; color: #007bff; font-weight: 600; text-align: center;">
+                        <i class="fas fa-spinner fa-spin"></i> Submitting application...
+                    </div>
+                    <div id="applyResult"
+                        style="display:none; margin-top: 15px; text-align: center; padding: 10px; border-radius: 8px;">
+                    </div>
+                </div>
+            </div>
+
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+
+        </main>
+    </div>
+    <script>
+        window.__PROFILE_INCOMPLETE = {% if profile_incomplete %}true{% else %} false{% endif %};
+        window.__PROFILE_RESUME_URL = "{{ resume_url }}";
+        window.__PROFILE_RESUME_IS_NEW = false;
+    </script>
+
+
+
+    <script src="{% static 'js/Dashboard.js' %}"></script>
+</body>
+
+</html>

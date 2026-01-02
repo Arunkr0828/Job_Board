@@ -1,0 +1,264 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job House Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/Dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/application.css' %}">
+    <link rel="stylesheet" href="{% static 'css/advice.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="toggle-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 class="logo-text">ItHUB</h2>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="{% url 'dashboard' %}" class="#" onclick="showSection('overview')">
+                        <i class="fas fa-home"></i>
+                        <span class="link-text">Home</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'search_jobs' %}" onclick="showSection('search')">
+                        <i class="fas fa-search"></i>
+                        <span class="link-text">Find Jobs</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'advice' %}" onclick="showSection('tutorials')">
+                        <i class="fab fa-youtube"></i>
+                        <span class="link-text">Career Advice</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'applications' %}" onclick="showSection('applications')">
+                        <i class="fas fa-file-alt"></i>
+                        <span class="link-text">Applied Jobs</span>
+                    </a>
+                </li>
+
+                <!-- About -->
+                <li>
+                    <a href="{% url 'about' %}" onclick="showSection('about')">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="link-text">About</span>
+                    </a>
+                </li>
+
+                <!-- Contact -->
+                <li>
+                    <a href="{% url 'contact' %}" onclick="showSection('contact')">
+                        <i class="fas fa-envelope"></i>
+                        <span class="link-text">Contact</span>
+                    </a>
+                </li><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+                <!-- Logout -->
+                <li class="logout-item">
+                    <a href="{% url 'logout' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="link-text">Logout</span>
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+
+        <main class="main-content" id="mainContent">
+            <div class="mobile-header">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <h2 class="mobile-logo">ItHUB</h2>
+                <div class="mobile-profile" onclick="toggleProfileMenu(event, 'mobileProfileDropdown')">
+
+                    <div class="profile-img-container">
+                        <span class="user-name">{{ name }}</span>
+                        {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" id="profileDisplay">
+                        {% else %}
+                        <img src="{% static 'media/profile.jpg' %}" id="profileDisplay">
+                        {% endif %}
+                    </div>
+
+                    <div class="profile-dropdown mobile-dropdown" id="mobileProfileDropdown">
+
+                        <a href="{% url 'profile'%}"><i class="fas fa-user"></i> Profile</a>
+                        <hr>
+                        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <header class="top-bar">
+                <div class="top-left">
+                    <a href="#" class="logo-link">
+                        <img src="{% static 'media/logo.jpg' %}" alt="ItHUB" class="top-logo">
+                        <span class="logo-text-inline">ItHUB</span>
+                    </a>
+                </div>
+                <!-- <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search jobs, skills..." />
+                </div> -->
+
+                <div class="user-profile" onclick="toggleProfileMenu(event, 'desktopProfileDropdown')">
+
+                    <span class="user-name">{{ name }}</span>
+
+
+                    <div class="profile-img-container">
+                        {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" id="profileDisplay">
+                        {% else %}
+                        <img src="{% static 'media/profile.jpg' %}" id="profileDisplay">
+                        {% endif %}
+                    </div>
+
+
+                    <i class="fas fa-chevron-down"></i>
+
+                    <div class="profile-dropdown" id="desktopProfileDropdown">
+
+                        <a href="{% url 'profile'%}">Profile</a>
+                        <hr>
+                        <a href="{% url 'logout' %}">Logout</a>
+                    </div>
+                </div>
+
+            </header>
+            <section id="career-advice" class="content-section">
+                <div class="advice-header">
+                    <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Career Growth & Guidance</h2>
+                    <p>Expert tips to help you land your dream job and master the IT industry.</p>
+                </div>
+
+                <div class="advice-grid">
+                    <div class="advice-card">
+                        <div class="card-tag">New for 2025</div>
+                        <div class="advice-icon"><i class="fas fa-rocket"></i></div>
+                        <h3>Best Career Advice for 2025</h3>
+                        <p>Learn the "Floor and Ceiling" rule to maintain consistency and build professional systems.
+                        </p>
+                        <a href="https://youtu.be/GSnipy63VX4" target="_blank" class="btn-advice">Watch Video <i
+                                class="fas fa-external-link-alt"></i></a>
+                    </div>
+
+                    <div class="advice-card">
+                        <div class="card-tag trending">Trending</div>
+                        <div class="advice-icon"><i class="fas fa-robot"></i></div>
+                        <h3>12 Must-Have AI Skills</h3>
+                        <p>Don't get left behind. Discover the AI tools and workflows companies are looking for in 2026.
+                        </p>
+                        <a href="https://youtu.be/WyA9rVN2_x0" target="_blank" class="btn-advice">Watch Video <i
+                                class="fas fa-external-link-alt"></i></a>
+                    </div>
+
+                    <div class="advice-card">
+                        <div class="advice-icon"><i class="fas fa-file-invoice"></i></div>
+                        <h3>ATS-Proof Resume Secrets</h3>
+                        <p>Stop getting rejected by bots. Learn how to format your resume to pass Applicant Tracking
+                            Systems.</p>
+                        <a href="https://youtu.be/O3m14PVOq_g" target="_blank" class="btn-advice">Watch Video <i
+                                class="fas fa-external-link-alt"></i></a>
+                    </div>
+
+                    <div class="advice-card">
+                        <div class="advice-icon"><i class="fas fa-comments"></i></div>
+                        <h3>Master the Tech Interview</h3>
+                        <p>Psychological tips and common technical questions to help you stay calm and impress
+                            recruiters.</p>
+                        <a href="https://youtu.be/UjqeYvBGhQw" target="_blank" class="btn-advice">Watch Video <i
+                                class="fas fa-external-link-alt"></i></a>
+                    </div>
+
+                    <div class="advice-card">
+                        <div class="advice-icon"><i class="fas fa-network-wired"></i></div>
+                        <h3>Networking on LinkedIn</h3>
+                        <p>How to reach out to hiring managers and employees without sounding desperate or annoying.</p>
+                        <a href="https://youtu.be/bmQpSgZd35g" target="_blank" class="btn-advice">Watch Video <i
+                                class="fas fa-external-link-alt"></i></a>
+                    </div>
+
+                    <div class="advice-card">
+                        <div class="advice-icon"><i class="fas fa-money-bill-wave"></i></div>
+                        <h3>Salary Negotiation Tactics</h3>
+                        <p>Never leave money on the table. Learn the exact phrases to use to increase your job offer.
+                        </p>
+                        <a href="https://youtu.be/2jmiNO3jwrA" target="_blank" class="btn-advice">Watch Video <i
+                                class="fas fa-external-link-alt"></i></a>
+                    </div>
+
+                    <div class="advice-card">
+                        <div class="advice-icon"><i class="fas fa-briefcase"></i></div>
+                        <h3>Portfolio Building for Devs</h3>
+                        <p>What projects actually get you hired? A guide to building a portfolio that proves your
+                            skills.</p>
+                        <a href="https://youtu.be/JJjBPBWaeYU" target="_blank" class="btn-advice">Watch Video <i
+                                class="fas fa-external-link-alt"></i></a>
+                    </div>
+
+                    <div class="advice-card">
+                        <div class="advice-icon"><i class="fas fa-user-tie"></i></div>
+                        <h3>Soft Skills for Engineers</h3>
+                        <p>Technical skill gets you the interview; soft skills get you the job. Master communication
+                            today.</p>
+                        <a href="https://youtu.be/9UNIK5wIKBU" target="_blank" class="btn-advice">Watch Video <i
+                                class="fas fa-external-link-alt"></i></a>
+                    </div>
+
+                    <div class="advice-card">
+                        <div class="advice-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3>High-Demand Tech Skills</h3>
+                        <p>Identify specific skill gaps in the market and position yourself as a top-tier candidate.</p>
+                        <a href="https://youtu.be/dIcZ9BbS184" target="_blank" class="btn-advice">Watch Video <i
+                                class="fas fa-external-link-alt"></i></a>
+                    </div>
+
+                    <div class="advice-card">
+                        <div class="advice-icon"><i class="fas fa-laptop-code"></i></div>
+                        <h3>Starting in I.T.</h3>
+                        <p>Essential advice for beginners: Why you don't need to know everything to get your first role.
+                        </p>
+                        <a href="https://youtu.be/MNi0lCIYJN8" target="_blank" class="btn-advice">Watch Video <i
+                                class="fas fa-external-link-alt"></i></a>
+                    </div>
+
+                    <div class="advice-card">
+                        <div class="advice-icon"><i class="fas fa-heart"></i></div>
+                        <h3>Find a Job You Care About</h3>
+                        <p>Align your personal interests with professional goals for a fulfilling, long-term career
+                            path.</p>
+                        <a href="https://youtu.be/pqMCdKH9oBQ" target="_blank" class="btn-advice">Watch Video <i
+                                class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </section>
+    </div>
+    </div>
+
+    </main>
+    </div>
+    <script src="{% static 'js/profile.js' %}"></script>
+    <script src="{% static 'js/application.js' %}"></script>
+    <script src="{% static 'js/Dashboard.js' %}"></script>
+</body>
+
+</html>
