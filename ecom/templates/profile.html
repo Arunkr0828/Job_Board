@@ -91,7 +91,7 @@
                     {% if profile.profile_image %}
                     <img src="{{ profile.profile_image.url }}" class="profileDisplay">
                     {% else %}
-                    <img src="{% static 'media/img.jpg' %}" class="profileDisplay">
+                    <img src="{% static 'images/img.jpg' %}" class="profileDisplay">
                     {% endif %}
 
                     <div class="profile-dropdown mobile-dropdown" id="mobileProfileDropdown">
@@ -108,7 +108,7 @@
             <header class="top-bar">
                 <div class="top-left">
                     <a href="#" class="logo-link">
-                        <img src="{% static 'media/logo.jpg' %}" alt="ItHUB" class="top-logo">
+                        <img src="{% static 'images/logo.jpg' %}" alt="ItHUB" class="top-logo">
                         <span class="logo-text-inline">ItHUB</span>
                     </a>
                 </div>
@@ -125,7 +125,7 @@
                         {% if profile.profile_image %}
                         <img src="{{ profile.profile_image.url }}" class="profileDisplay">
                         {% else %}
-                        <img src="{% static 'media/profile.jpg' %}" class="profileDisplay">
+                        <img src="{% static 'images/profile.jpg' %}" class="profileDisplay">
                         {% endif %}
                     </div>
 
@@ -166,7 +166,7 @@
                                         {% if profile.profile_image %}
                                         <img src="{{ profile.profile_image.url }}" id="profileDisplay">
                                         {% else %}
-                                        <img src="{% static 'media/profile.jpg' %}" id="profileDisplay">
+                                        <img src="{% static 'images/profile.jpg' %}" id="profileDisplay">
                                         {% endif %}
 
                                         <label for="profile_image" class="upload-icon">

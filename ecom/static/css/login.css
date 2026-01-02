@@ -12,7 +12,7 @@ body {
     align-items: center;
     /* Dark overlay to make the tech-background pop without being distracting */
     background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.8)), 
-                url('/static/media/image.png'); 
+                url('/static/images/image.png'); 
     background-size: cover;
     background-position: center;
     height: 100vh;
